@@ -54,6 +54,7 @@ dp.means <- function(data, lambda = 1, max.iterations = 100, tolerance = 10e-3)
     }
     
     ss.change <- ss.old - ss.new
+    ss.old <- ss.new
     
     if (!is.nan(ss.change) && ss.change < tolerance)
     {
