@@ -1,26 +1,13 @@
 data <- read.csv("output.tsv", sep = "\t")
 names(data) <- c('x', 'y', 'assignment', 'lambda')
 
-ggplot(subset(data, lambda == 1.0),
-       aes(x = x, y = y, color = factor(assignment))) +
-  geom_point() +
-  opts(legend.position = "none") +
-  opts(title = "Lambda = 1.0")
-
-ggplot(subset(data, lambda == 10.0),
-       aes(x = x, y = y, color = factor(assignment))) +
-  geom_point() +
-  opts(legend.position = "none") +
-  opts(title = "Lambda = 10.0")
-
-ggplot(subset(data, lambda == 50.0),
-       aes(x = x, y = y, color = factor(assignment))) +
-  geom_point() +
-  opts(legend.position = "none") +
-  opts(title = "Lambda = 50.0")
-  
-ggplot(subset(data, lambda == 100.0),
-       aes(x = x, y = y, color = factor(assignment))) +
-  geom_point() +
-  opts(legend.position = "none") +
-  opts(title = "Lambda = 100.0")
+for (my.lambda in unique(data$lambda))
+{
+  p <- ggplot(subset(data, lambda == my.lambda),
+         aes(x = x, y = y, color = factor(assignment))) +
+    geom_point() +
+    opts(legend.position = "none") +
+    opts(title = paste("dp-Means Algorithm with Lambda =", my.lambda))
+  ggsave(p, file = paste(my.lambda, "_dp-means.pdf", sep = ""))
+  ggsave(p, file = paste(my.lambda, "_dp-means.png", sep = ""))
+}

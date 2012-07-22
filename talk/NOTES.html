@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+	<!--
+	Google HTML5 slide template
+
+Authors: Luke Mah?? (code)
+Marcin Wichary (code and design)
+
+Dominic Mazzoni (browser compatibility)
+Charles Chen (ChromeVox support)
+
+URL: http://code.google.com/p/html5slides/
+	-->
+	
+<html>
+<head>
+	
+	<meta charset='utf-8'>
+	<title>Bayesian Nonparametrics</title>
+  <meta name="description" content="Bayesian Nonparametrics">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+	
+	<!-- LOAD STYLE SHEETS -->
+	<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/2.15/Resources/library/slidify/libraries/html5slides/default/styles.css">
+	<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/2.15/Resources/library/slidify/libraries/html5slides/default/uulm.css">
+	<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/2.15/Resources/library/slidify/libraries/highlight.js/styles/github.css">
+  <!-- LOAD CUSTOM CSS -->
+  
+    
+</head>
+<body style='display: none'>
+	<section class='slides layout-regular template-regular'>
+	  <article class = "" id = "slide-1"> 
+	    <h1>Bayesian Nonparametrics</h1>
+
+
+<h3>An Introduction using R</h3>
+
+<h3>John Myles White</h3>
+
+    </article>
+	  <article class = "" id = "slide-2"> 
+	    <h3>What is Statistics?</h3>
+
+
+<ul>
+<li>Statistics is a mathematical theory that tells us how we <em>should</em> learn about the structure of the world around us based on our experiences</li>
+<li>Statistical theory decides which methods are <em>good</em> and which are <em>bad</em> by inventing a theoretical world in which we can precisely measure how well we are learning from our experiences</li>
+<li>The practical value of statistical theory depends upon the match between the structure of this theoretical world and the real world</li>
+<li>But we need powerful models if we want to describe the complex structures that actually occur in the real world</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-3"> 
+	    <h3>What is Nonparametric Statistics?</h3>
+
+
+<ul>
+<li>Nonparametric statistical models try to pull out the structure of the world from data, rather than push the structure of our theories onto data</li>
+<li>Nonparametric statistical models &quot;let the data speak&quot; by employing highly flexible functional forms</li>
+<li>Nonparametric statistical models typically have infinitely many parameters</li>
+<li>But only a finite number of parameters are used when analyzing any specific data set</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-4"> 
+	    <h3>Nonparametric Density Estimation</h3>
+
+
+<ul>
+<li>Many data sets don&#39;t look like out-of-the-box statistical distributions:</li>
+</ul>
+
+<p><img src="examples/marathon/men_hours.pdf" alt="Marathon-Times"></p>
+
+    </article>
+	  <article class = "" id = "slide-5"> 
+	    <h3>Nonparametric Density Estimation</h3>
+
+
+<ul>
+<li>We want to estimate the true distribution of runners&#39; times from this bimodal sample of data</li>
+<li>We have two standard nonparametric density estimation tools:
+
+<ul>
+<li>Histograms</li>
+<li>Kernel Density Estimators (KDE&#39;s)</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-6"> 
+	    <h3>Histograms are a Nonparametric Method</h3>
+
+
+<ul>
+<li>If you have infinite data, a histogram will converge on the true distribution</li>
+</ul>
+
+<p>SHOW SAMPLES OF SIZE 100, 1000, 10000</p>
+
+    </article>
+	  <article class = "" id = "slide-7"> 
+	    <h3>KDE&#39;s are a Nonparametric Method</h3>
+
+
+<ul>
+<li>If you have infinite data, a KDE will converge on the true distribution</li>
+</ul>
+
+<p>SHOW SAMPLES OF SIZE 100, 1000, 10000</p>
+
+    </article>
+	  <article class = "" id = "slide-8"> 
+	    <h3>KDE&#39;s &gt; Histograms</h3>
+
+
+<ul>
+<li>KDE&#39;s converge on the true distribution faster than histograms</li>
+</ul>
+
+<p>SHOW CONVERGENCE RATES</p>
+
+    </article>
+	  <article class = "" id = "slide-9"> 
+	    <h3>Nonparametric Regression</h3>
+
+
+<ul>
+<li>Many data sets have relationships between variables that don&#39;t look like straight lines</li>
+<li>We need regression models that are more expressive than linear regression</li>
+</ul>
+
+<p><img src="examples/weather/weather_points.pdf" alt="Weather"></p>
+
+    </article>
+	  <article class = "" id = "slide-10"> 
+	    <h3>Nonparametric Regression</h3>
+
+
+<ul>
+<li>We have several standard nonparametric regression tools:
+
+<ul>
+<li>Loess</li>
+<li>Generalized Additive Models (GAM&#39;s)</li>
+<li>k-Nearest Neighbors Regression (kNN)</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-11"> 
+	    <h3>Loess is a Nonparametric Method</h3>
+
+
+<ul>
+<li>If you have infinite data, loess may converge on the true distribution</li>
+</ul>
+
+<p><img src="examples/weather/weather_loess.pdf" alt="Weather"></p>
+
+    </article>
+	  <article class = "" id = "slide-12"> 
+	    <h3>What is Bayesian Statistics?</h3>
+
+
+<ul>
+<li>Bayesian statistical models are enriched by prior knowledge
+
+<ul>
+<li>Prior knowledge can be viewed as regularization</li>
+</ul></li>
+<li>Knowledge gained from experience is quantified using probability theory:
+
+<ul>
+<li>Inferences are distributions, not point estimates or interval estimates</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-13"> 
+	    <h3>Why Use Bayesian Statistics?</h3>
+
+
+<ul>
+<li>Three points in its favor:
+
+<ul>
+<li>Universally applicable</li>
+<li>Often more effective than maximum likelihood methods</li>
+<li>Increasingly easy to apply to arbitrary problems in data analysis</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-14"> 
+	    <h3>Why Not Use Bayesian Statistics?</h3>
+
+
+<ul>
+<li>Four points against it:
+
+<ul>
+<li>Can still be hard to apply to some problems</li>
+<li>Requires greater grasp of statistical theory to apply to new problems</li>
+<li>Rarely implemented in out-of-the-box software</li>
+<li>Inaccurate prior knowledge can produce worse inferences than starting from scratch</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-15"> 
+	    <h3>What is Bayesian Nonparametrics?</h3>
+
+
+<ul>
+<li>We want to use prior knowledge while estimating flexible functional forms</li>
+<li>Like frequentist methods, standard Bayesian models are parametric</li>
+<li>Bayesian nonparametrics exploit a family of flexible distributions that encode prior knowledge</li>
+<li>Typically that prior knowledge reflects Occam&#39;s Razor</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-16"> 
+	    <h3>What is Bayesian Nonparametrics?</h3>
+
+
+<ul>
+<li>Many statistical models require the <em>a priori</em> selection of integer parameters:
+
+<ul>
+<li><em>k</em>: Number of clusters in <em>k</em>-means</li>
+<li><em>k</em>: Number of factors in factor analysis</li>
+<li><em>h</em>: Bandwidth of kernel density estimator</li>
+</ul></li>
+<li>Bayesian nonparametric methods provide methods that use priors to infer these numbers from data</li>
+<li>Prior information is still required, but data can influence the results -- unlike hardcoded parameters in traditional models</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-17"> 
+	    <h3>Core Tools in Bayesian Nonparametrics</h3>
+
+
+<ul>
+<li>Dirichlet Process
+
+<ul>
+<li>Distribution over distributions</li>
+</ul></li>
+<li>Chinese Restaurant Process
+
+<ul>
+<li>Distribution over category assignment</li>
+</ul></li>
+<li>Indian Buffet Process
+
+<ul>
+<li>Distribution over active factors</li>
+</ul></li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-18"> 
+	    <h3>Chinese Restaurant Process</h3>
+
+
+<p><img src="images/CRP.jpg" alt="CRP"></p>
+
+    </article>
+	  <article class = "" id = "slide-19"> 
+	    <h3>Indian Buffet Process</h3>
+
+
+<p><img src="images/IBP.jpg" alt="IBP"></p>
+
+    </article>
+	  <article class = "" id = "slide-20"> 
+	    <h3>CRP vs. IBP Draws</h3>
+
+
+<p><img src="images/IBP-CRP-Draws.jpg" alt="CRPvsIBP"></p>
+
+    </article>
+	  <article class = "" id = "slide-21"> 
+	    <h3>Three Examples of Bayesian Nonparametrics</h3>
+
+
+<ul>
+<li>dp-Means: An easily implemented and fully automatic infinite cluster mixture model that borrows ideas from Bayesian nonparametrics</li>
+<li>crp-MM: An infinite cluster Gaussian Mixture model using a Dirichlet Process prior</li>
+<li>ibp-FA: An infinite dimensional factor analysis model using an Indian Buffet Process prior</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-22"> 
+	    <h3>dp-Means</h3>
+
+
+<ul>
+<li>The dp-Means algorithm is an analogue to k-means</li>
+<li>It always converges and always reaches the same solution</li>
+<li>It has one parameter: \(\lambda\)</li>
+<li>If a point is further from the current clusters by more than \(\lambda\), it gets its own cluster</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-23"> 
+	    
+<pre><code>library(&quot;ggplot2&quot;)
+
+source(&quot;dp-means.R&quot;)
+
+data &lt;- generate.data()
+
+ggplot(data, aes(x = x, y = y, color = assignment)) +
+  geom_point()
+
+dp.results &lt;- dp.means(data, 30)
+
+ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
+  geom_point()
+</code></pre>
+
+    </article>
+	  <article class = "" id = "slide-24"> 
+	    
+<p><img src="../code/dp-means/0_dp-means.pdf" alt="dp-Means_0"></p>
+
+    </article>
+	  <article class = "" id = "slide-25"> 
+	    
+<p><img src="../code/dp-means/1_dp-means.pdf" alt="dp-Means_1"></p>
+
+    </article>
+	  <article class = "" id = "slide-26"> 
+	    
+<p><img src="../code/dp-means/10_dp-means.pdf" alt="dp-Means_10"></p>
+
+    </article>
+	  <article class = "" id = "slide-27"> 
+	    
+<p><img src="../code/dp-means/50_dp-means.pdf" alt="dp-Means_50"></p>
+
+    </article>
+	  <article class = "" id = "slide-28"> 
+	    
+<p><img src="../code/dp-means/100_dp-means.pdf" alt="dp-Means_100"></p>
+
+    </article>
+	  <article class = "" id = "slide-29"> 
+	    
+<p><img src="../code/dp-means/125_dp-means.pdf" alt="dp-Means_125"></p>
+
+    </article>
+	  <article class = "" id = "slide-30"> 
+	    
+<p><img src="../code/dp-means/200_dp-means.pdf" alt="dp-Means_200"></p>
+
+    </article>
+	  <article class = "" id = "slide-31"> 
+	    <h3>dp-Means</h3>
+
+
+<ul>
+<li>dp-Means is as useful as k-means, but it is not a proper Bayesian method</li>
+<li>It cannot be used for online inference</li>
+<li>It cannot measure the uncertainty in its parameters</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-32"> 
+	    <h3>The Near Future</h3>
+
+
+<ul>
+<li>Variational inference</li>
+<li>Stochastic variational inference</li>
+<li>Applying Bayesian nonparameters to huge, streaming data sets</li>
+</ul>
+
+    </article>
+	  <article class = "" id = "slide-33"> 
+	    <h3>References</h3>
+
+
+<ul>
+<li>Gershman and Blei</li>
+<li>dp-Means ArXiv Paper</li>
+<li>Chinese Restaurant Process</li>
+<li>Indian Buffet Process</li>
+<li>Stochastic Variational Inference</li>
+<li>Teh Tutorial</li>
+<li>Gharahmani Tutorial</li>
+<li>Blei Course Notes</li>
+</ul>
+
+    </article>
+  </section>
+</body>
+  <!-- LOAD JAVASCRIPTS  -->
+	<script src='/Library/Frameworks/R.framework/Versions/2.15/Resources/library/slidify/libraries/html5slides/default/slides.js'></script>
+	<!-- LOAD MATHJAX JS -->
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [['$','$'], ['\\(','\\)']],
+         processEscapes: true
+       }
+     });
+  </script>
+  <script type="text/javascript"  
+src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  <!-- DONE LOADING MATHJAX -->
+	  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="/Library/Frameworks/R.framework/Versions/2.15/Resources/library/slidify/libraries/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING CSS FILES AND JS -->
+
+		
+	
+</html>
+

@@ -1,6 +1,10 @@
 load("dp-means.jl")
 
+srand(1)
+
 data = generate_data()
+
+run(`rm output.tsv`)
 
 function print_results(results, lambda::Float64)
   f = open("output.tsv", "a")
@@ -10,15 +14,7 @@ function print_results(results, lambda::Float64)
   close(f)
 end
 
-results = dp_means(data, 1.0)
-print_results(results, 1.0)
-
-results = dp_means(data, 10.0)
-print_results(results, 10.0)
-
-results = dp_means(data, 50.0)
-print_results(results, 50.0)
-
-results = dp_means(data, 100.0)
-print_results(results, 100.0)
-
+for lambda in [0.0, 1.0, 10.0, 50.0, 100.0, 125.0, 200.0]
+  results = dp_means(data, lambda)
+  print_results(results, lambda)
+end
