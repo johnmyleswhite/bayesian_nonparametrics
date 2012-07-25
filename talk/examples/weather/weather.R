@@ -6,7 +6,7 @@ ggplot(df, aes(x = DayOfYear, y = Precipitation)) +
   xlab("Day of Year") +
   ylab("Probability of Precipitation") +
   opts(title = "Chance of Rain in Seattle over the Course of the Year")
-ggsave("examples/weather/weather_points.pdf", height = 5, width = 5)
+ggsave("examples/weather/weather_points.pdf", height = 7, width = 7)
 
 ggplot(df, aes(x = DayOfYear, y = Precipitation)) +
   geom_point() +
@@ -14,7 +14,7 @@ ggplot(df, aes(x = DayOfYear, y = Precipitation)) +
   xlab("Day of Year") +
   ylab("Probability of Precipitation") +
   opts(title = "Chance of Rain in Seattle over the Course of the Year")
-ggsave("examples/weather/weather_loess.pdf", height = 5, width = 5)
+ggsave("examples/weather/weather_loess.pdf", height = 7, width = 7)
 
 # This seems to be broken.
 # Skip

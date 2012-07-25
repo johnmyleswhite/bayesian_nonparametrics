@@ -11,7 +11,7 @@ ggplot(times, aes(x = Hours)) +
   xlab("Hours") +
   ylab("Number of Runners") +
   opts(title = "Top 100 Mens' Times to Complete the NYC Marathon")
-ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 5, width = 5)
+ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 7, width = 7)
 
 # Show a histogram
 ggplot(times, aes(x = Hours)) +
@@ -19,7 +19,7 @@ ggplot(times, aes(x = Hours)) +
   xlab("Hours") +
   ylab("Number of Runners") +
   opts(title = "Top 100 Mens' Times to Complete the NYC Marathon")
-ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 5, width = 5)
+ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 7, width = 7)
 
 # Show density plots
 ggplot(times, aes(x = Hours)) +
@@ -27,4 +27,4 @@ ggplot(times, aes(x = Hours)) +
   xlab("Hours") +
   ylab("Number of Runners") +
   opts(title = "Top 100 Mens' Times to Complete the NYC Marathon")
-ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 5, width = 5)
+ggsave(file.path("examples", "marathon", "men_hours.pdf"), height = 7, width = 7)
