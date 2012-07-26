@@ -553,6 +553,99 @@ O(n^{-\frac{4}{5}}) < O(n^{-\frac{2}{3}})
 
 ---
 
+### dp-Means Algorithm
+
+    dp.means <- function(data,
+                         lambda = 1,
+                         max.iterations = 100,
+                         tolerance = 10e-3)
+    {
+      n <- nrow(data)
+      k <- 1
+      assignments <- rep(1, n)
+      mu.x <- mean(data$x)
+      mu.y <- mean(data$y)
+
+---
+
+### dp-Means Algorithm
+
+      converged <- FALSE
+      iteration <- 0
+  
+      ss.old <- Inf
+      ss.new <- Inf
+  
+      while (!converged && iteration < max.iterations)
+      {
+        iteration <- iteration + 1
+        
+        for (i in 1:n)
+        {
+          distances <- rep(NA, k)
+      
+          for (j in 1:k)
+          {
+            distances[j] <- (data[i, 'x'] - mu.x[j])^2 + 
+                            (data[i, 'y'] - mu.y[j])^2
+          }
+
+---
+
+### dp-Means Algorithm
+
+          if (min(distances) > lambda)
+          {
+            k <- k + 1
+            assignments[i] <- k
+            mu.x[k] <- data[i, 'x']
+            mu.y[k] <- data[i, 'y']
+          } else
+          {
+            assignments[i] <- which(distances == min(distances))
+          }
+        }
+    
+        for (j in 1:k)
+        {
+          if (length(assignments == j) > 0)
+          {
+            mu.x[j] <- mean(data[assignments == j, 'x'])
+            mu.y[j] <- mean(data[assignments == j, 'y'])
+          }
+        }
+
+---
+
+### dp-Means Algorithm
+
+        ss.new <- 0
+      
+        for (i in 1:n)
+        {
+          ss.new <- ss.new +
+                    (data[i, 'x'] - mu.x[assignments[i]])^2 +
+                    (data[i, 'y'] - mu.y[assignments[i]])^2
+        }
+    
+        ss.change <- ss.old - ss.new
+        ss.old <- ss.new
+    
+        if (!is.nan(ss.change) && ss.change < tolerance)
+        {
+          converged <- TRUE
+        }
+      }
+  
+      centers <- data.frame(x = mu.x, y = mu.y)
+      return(list("centers" = centers,
+                  "assignments" = factor(assignments),
+                  "k" = k,
+                  "iterations" = iteration))
+    }
+
+---
+
 ### dp-Means
 
 * dp-Means is as useful as k-means, but it is not a proper Bayesian method

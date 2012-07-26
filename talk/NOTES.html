@@ -833,6 +833,107 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 
     </article>
 	  <article class = "" id = "slide-69"> 
+	    <h3>dp-Means Algorithm</h3>
+
+
+<pre><code>dp.means &lt;- function(data,
+                     lambda = 1,
+                     max.iterations = 100,
+                     tolerance = 10e-3)
+{
+  n &lt;- nrow(data)
+  k &lt;- 1
+  assignments &lt;- rep(1, n)
+  mu.x &lt;- mean(data$x)
+  mu.y &lt;- mean(data$y)
+</code></pre>
+
+    </article>
+	  <article class = "" id = "slide-70"> 
+	    <h3>dp-Means Algorithm</h3>
+
+
+<pre><code>  converged &lt;- FALSE
+  iteration &lt;- 0
+
+  ss.old &lt;- Inf
+  ss.new &lt;- Inf
+
+  while (!converged &amp;&amp; iteration &lt; max.iterations)
+  {
+    iteration &lt;- iteration + 1
+
+    for (i in 1:n)
+    {
+      distances &lt;- rep(NA, k)
+
+      for (j in 1:k)
+      {
+        distances[j] &lt;- (data[i, &#39;x&#39;] - mu.x[j])^2 + 
+                        (data[i, &#39;y&#39;] - mu.y[j])^2
+      }
+</code></pre>
+
+    </article>
+	  <article class = "" id = "slide-71"> 
+	    <h3>dp-Means Algorithm</h3>
+
+
+<pre><code>      if (min(distances) &gt; lambda)
+      {
+        k &lt;- k + 1
+        assignments[i] &lt;- k
+        mu.x[k] &lt;- data[i, &#39;x&#39;]
+        mu.y[k] &lt;- data[i, &#39;y&#39;]
+      } else
+      {
+        assignments[i] &lt;- which(distances == min(distances))
+      }
+    }
+
+    for (j in 1:k)
+    {
+      if (length(assignments == j) &gt; 0)
+      {
+        mu.x[j] &lt;- mean(data[assignments == j, &#39;x&#39;])
+        mu.y[j] &lt;- mean(data[assignments == j, &#39;y&#39;])
+      }
+    }
+</code></pre>
+
+    </article>
+	  <article class = "" id = "slide-72"> 
+	    <h3>dp-Means Algorithm</h3>
+
+
+<pre><code>    ss.new &lt;- 0
+
+    for (i in 1:n)
+    {
+      ss.new &lt;- ss.new +
+                (data[i, &#39;x&#39;] - mu.x[assignments[i]])^2 +
+                (data[i, &#39;y&#39;] - mu.y[assignments[i]])^2
+    }
+
+    ss.change &lt;- ss.old - ss.new
+    ss.old &lt;- ss.new
+
+    if (!is.nan(ss.change) &amp;&amp; ss.change &lt; tolerance)
+    {
+      converged &lt;- TRUE
+    }
+  }
+
+  centers &lt;- data.frame(x = mu.x, y = mu.y)
+  return(list(&quot;centers&quot; = centers,
+              &quot;assignments&quot; = factor(assignments),
+              &quot;k&quot; = k,
+              &quot;iterations&quot; = iteration))
+}
+</code></pre>
+
+    </article>
+	  <article class = "" id = "slide-73"> 
 	    <h3>dp-Means</h3>
 
 
@@ -841,7 +942,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-70"> 
+	  <article class = "" id = "slide-74"> 
 	    <h3>dp-Means</h3>
 
 
@@ -851,7 +952,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-71"> 
+	  <article class = "" id = "slide-75"> 
 	    <h3>dp-Means</h3>
 
 
@@ -862,7 +963,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-72"> 
+	  <article class = "" id = "slide-76"> 
 	    <h3>dp-MM</h3>
 
 
@@ -871,7 +972,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-73"> 
+	  <article class = "" id = "slide-77"> 
 	    <h3>dp-MM</h3>
 
 
@@ -881,7 +982,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-74"> 
+	  <article class = "" id = "slide-78"> 
 	    <h3>dp-MM</h3>
 
 
@@ -892,7 +993,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-75"> 
+	  <article class = "" id = "slide-79"> 
 	    <h3>dp-MM</h3>
 
 
@@ -904,7 +1005,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-76"> 
+	  <article class = "" id = "slide-80"> 
 	    <h3>dp-MM</h3>
 
 
@@ -917,7 +1018,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-77"> 
+	  <article class = "" id = "slide-81"> 
 	    <h3>dp-MM</h3>
 
 
@@ -931,7 +1032,7 @@ ggplot(data, aes(x = x, y = y, color = dp.results$assignments)) +
 </ul>
 
     </article>
-	  <article class = "" id = "slide-78"> 
+	  <article class = "" id = "slide-82"> 
 	    <h3>dp-MM</h3>
 
 
@@ -946,35 +1047,35 @@ ggsave(&quot;code/dpmm/dpmm_0.01.pdf&quot;, height = 7, width = 7)
 </code></pre>
 
     </article>
-	  <article class = "" id = "slide-79"> 
+	  <article class = "" id = "slide-83"> 
 	    <h3>dp-MM</h3>
 
 
 <p><img src="../code/dpmm/dpmm_0.5.pdf" alt="dpMM_0.5"></p>
 
     </article>
-	  <article class = "" id = "slide-80"> 
+	  <article class = "" id = "slide-84"> 
 	    <h3>dp-MM</h3>
 
 
 <p><img src="../code/dpmm/dpmm_2.5.pdf" alt="dpMM_2.5"></p>
 
     </article>
-	  <article class = "" id = "slide-81"> 
+	  <article class = "" id = "slide-85"> 
 	    <h3>dp-MM</h3>
 
 
 <p><img src="../code/dpmm/dpmm_12.5.pdf" alt="dpMM_12.5"></p>
 
     </article>
-	  <article class = "" id = "slide-82"> 
+	  <article class = "" id = "slide-86"> 
 	    <h3>dp-MM</h3>
 
 
 <p><img src="../code/dpmm/dpmm_100.0.pdf" alt="dpMM_100.0"></p>
 
     </article>
-	  <article class = "" id = "slide-83"> 
+	  <article class = "" id = "slide-87"> 
 	    <h3>The Near Future of Bayesian Nonparametrics</h3>
 
 
@@ -983,7 +1084,7 @@ ggsave(&quot;code/dpmm/dpmm_0.01.pdf&quot;, height = 7, width = 7)
 </ul>
 
     </article>
-	  <article class = "" id = "slide-84"> 
+	  <article class = "" id = "slide-88"> 
 	    <h3>The Near Future of Bayesian Nonparametrics</h3>
 
 
@@ -993,7 +1094,7 @@ ggsave(&quot;code/dpmm/dpmm_0.01.pdf&quot;, height = 7, width = 7)
 </ul>
 
     </article>
-	  <article class = "" id = "slide-85"> 
+	  <article class = "" id = "slide-89"> 
 	    <h3>The Near Future of Bayesian Nonparametrics</h3>
 
 
@@ -1004,7 +1105,7 @@ ggsave(&quot;code/dpmm/dpmm_0.01.pdf&quot;, height = 7, width = 7)
 </ul>
 
     </article>
-	  <article class = "" id = "slide-86"> 
+	  <article class = "" id = "slide-90"> 
 	    <h3>References</h3>
 
 
